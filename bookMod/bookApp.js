@@ -2,14 +2,22 @@ const express = require('express')
 const cors = require('cors')
 const formData = require('express-form-data')
 
-const {Book} = require('./models/index')
+const {Book, User} = require('./models/index')
 
 const stor = {
     books: [],
+    users: []
 }
 let numbr = [1, 2, 3];
 numbr.map(el => {
-    const newTodo = new Book(`title ${el}`, `auther todo ${el}`, `desc ${el}`);
+    const newTodo = new Book(`id ${el}`, 
+                            `title ${el}`, 
+                            `description ${el}`, 
+                            `authors ${el}`,
+                            `favorite ${el}`,
+                            `fileCover ${el}`,
+                            `fileName ${el}`,
+                            );
     stor.books.push(newTodo);
 });
 
@@ -40,18 +48,18 @@ app.get('/api/book/:id', (req, res) => {
 
 app.post('/api/book/', (req, res) => {
     const {books} = stor
-    const {title, auther, desc} = req.body
+    const {title, description, authors, favorite, fileCover, fileName} = req.body
 
-    const newBook = new Book(title, auther, desc)
+    const newBook = new Book(title, description, authors, favorite, fileCover, fileName)
 
     books.push(newBook)
 
-    res.status(200).json(newBook)
+    res.status(201).json(newBook)
 })
 
 app.put('/api/book/:id', (req, res) => {
     const {books} = stor
-    const {title, auther, desc} = req.body
+    const {title, description, authors, favorite, fileCover, fileName} = req.body
     const {id} = req.params
 
 
@@ -60,8 +68,11 @@ app.put('/api/book/:id', (req, res) => {
         books[idx] = {
             ...books[idx],
             title,
-            auther,
-            desc
+            description,
+            authors,
+            favorite,
+            fileCover,
+            fileName
         }
 
         res.json(books[idx])
@@ -79,9 +90,19 @@ app.delete('/api/book/:id', (req, res) => {
         books.splice(idx, 1)
         res.json(true)
     }else {
-        res.status(404).json('book | not found (((')
+        res.status(404).json('book | not found (')
     }
 
+})
+
+app.post('/api/user/login', (req, res)=> {
+    const {users} = stor
+    const {mail} = req.body
+
+    const newUser = new User(mail)
+
+    users.push(newUser)
+    res.status(201).json(newUser)
 })
 
 
