@@ -109,11 +109,9 @@ router.delete('/:id', (req, res) => {
 // })
 
 router.post('/upload-img', fileMiddleWare.single('my-book'), (req, res)=> {
-    console.log(req);
     if (req.file) {
         const {path} = req.file
         
-        console.log('file  ',file);
         console.log('path  ',path);
         
         res.json(path)
