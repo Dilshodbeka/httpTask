@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router();
 
 const {Book, User} = require('../models/index')
+const fileMiddleWare = require('../middleware/downloadFile')
 
 const stor = {
     books: [],
@@ -9,13 +10,14 @@ const stor = {
 }
 let numbr = [1, 2, 3];
 numbr.map(el => {
-    const newTodo = new Book(`id ${el}`,
+    const newTodo = new Book(
                             `title ${el}`, 
                             `description ${el}`, 
                             `authors ${el}`,
                             `favorite ${el}`,
                             `fileCover ${el}`,
                             `fileName ${el}`,
+                            `fileBook ${el}`
                             );
     stor.books.push(newTodo);
 });
@@ -39,11 +41,18 @@ router.get('/:id', (req, res) => {
     }
 })
 
+
+// api/api/book/:id/download  
+router.get('/:id/download', (req, res) => {
+    // const {id} = req.params
+    //  console.log(res.download('/public/img/'+ id, (err) => {if (err) throw err}));
+})
+
 router.post('/', (req, res) => {
     const {books} = stor
-    const {title, description, authors, favorite, fileCover, fileName} = req.body
+    const {title, description, authors, favorite, fileCover, fileName, fileBook} = req.body
 
-    const newBook = new Book(title, description, authors, favorite, fileCover, fileName)
+    const newBook = new Book(title, description, authors, favorite, fileCover, fileName, fileBook)
 
     books.push(newBook)
 
@@ -52,7 +61,7 @@ router.post('/', (req, res) => {
 
 router.put('/:id', (req, res) => {
     const {books} = stor
-    const {title, description, authors, favorite, fileCover, fileName} = req.body
+    const {title, description, authors, favorite, fileCover, fileName, fileBook} = req.body
     const {id} = req.params
 
 
@@ -65,7 +74,8 @@ router.put('/:id', (req, res) => {
             authors,
             favorite,
             fileCover,
-            fileName
+            fileName,
+            fileBook
         }
 
         res.json(books[idx])
@@ -97,5 +107,15 @@ router.delete('/:id', (req, res) => {
 //     users.push(newUser)
 //     res.status(201).json(newUser)
 // })
+
+router.post('/upload-img', fileMiddleWare.single('Res.pdf'), (req, res)=> {
+    if (req.file) {
+        const {path} = req.file
+        console.log(path);
+        res.json(path)
+    }else {
+        res.json(null)
+    }
+})
 
 module.exports = router
