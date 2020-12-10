@@ -44,8 +44,8 @@ router.get('/:id', (req, res) => {
 
 // api/api/book/:id/download  
 router.get('/:id/download', (req, res) => {
-    // const {id} = req.params
-    //  console.log(res.download('/public/img/'+ id, (err) => {if (err) throw err}));
+    const {id} = req.params
+     console.log(res.download(__dirname + '/../public/img/'+ id+'.pdf', id+'.pdf', (err) => {if (err) throw err}));
 })
 
 router.post('/', (req, res) => {
@@ -108,10 +108,14 @@ router.delete('/:id', (req, res) => {
 //     res.status(201).json(newUser)
 // })
 
-router.post('/upload-img', fileMiddleWare.single('Res.pdf'), (req, res)=> {
+router.post('/upload-img', fileMiddleWare.single('my-book'), (req, res)=> {
+    console.log(req);
     if (req.file) {
         const {path} = req.file
-        console.log(path);
+        
+        console.log('file  ',file);
+        console.log('path  ',path);
+        
         res.json(path)
     }else {
         res.json(null)
