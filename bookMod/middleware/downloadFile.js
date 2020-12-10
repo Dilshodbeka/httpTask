@@ -9,7 +9,7 @@ const storage = multer.diskStorage({
     }
   })
 
-const uploadType = ['book/pdf', 'application/x-pdf']
+const uploadType = ['application/pdf', 'application/x-pdf']
 
 const fileFilter = (req, file, cb) => {
     if (uploadType.includes(file.mimetype)) {
