@@ -1,7 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const bodyParser  = require('body-parser')
-let ejs = require('ejs')
+const ejs = require('ejs')
 
 const loggerMiddleWare = require('./middleware/logger')
 const errorMiddleWare = require('./middleware/error')
