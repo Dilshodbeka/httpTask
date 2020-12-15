@@ -26,7 +26,11 @@
                         <td><%= book.fileBook %></td>
                         <td>
                             <a href="/book/update/<%= book.id %>" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons btn btn-sm btn-primary ">&#xE254;</i></a>
-                            <a href="/book/delete/<%= book.id %>" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons btn btn-sm btn-danger">&#xE872;</i></a>
+                            <form action="/book/delete/<%= book.id %>" method="POST" class="d-inline">
+                                <button class="btn btn-sm btn-danger">
+                                    <i class="material-icons">&#xE872;</i>
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 </tbody>

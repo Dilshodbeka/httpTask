@@ -27,7 +27,7 @@ router.get('/', (req, res) => {
     const {books} = stor
     res.render('book/index', {
         title: 'Book',
-        books: books
+        book: books
     })
 })
 
@@ -42,7 +42,6 @@ router.get('/create', (req, res) => {
 router.post('/create', (req, res) => {
     const {books} = stor
     const {title, description, authors, favorite, fileCover, fileName, fileBook} = req.body
-
     const newBook = new Book(title, description, authors, favorite, fileCover, fileName, fileBook)
 
     books.push(newBook)
@@ -50,6 +49,16 @@ router.post('/create', (req, res) => {
     res.redirect('/book')
 });
 
+// router.post('/upload-img',  (req, res)=> {
+//     if (req.file) {
+//         const {path} = req.file
+        
+//         console.log('added ',path);
+//         res.redirect('/book')
+//     }else {
+//         res.render(null)
+//     }
+// })
 
 
 router.get('/:id', (req, res) => {
