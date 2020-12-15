@@ -1,7 +1,7 @@
 <%- include("../partials/layout-start", {title: title}) %>
 <%- include("../partials/menu") %>
-<h1><%= title %></h1>
-
+<div class="container">
+    <h1><%= title %></h1>
 <a class="btn btn-sm btn-success" href="book/create">Добавить запись</a>
 
 <% if(books.length) { %>
@@ -38,6 +38,6 @@
 <% }else { %>
     <h3 class="mt-5">Записей пока нет</h3>
 <% } %>
-
+</div>
 
 <%- include("../partials/layout-end") %>
