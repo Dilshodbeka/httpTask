@@ -25,30 +25,21 @@ numbr.map(el => {
 
 router.get('/', (req, res) => {
     const {books} = stor
-    res.json(books)
+    res.render('book/index', {
+        title: 'Book',
+        books: books
+    })
 })
 
-router.get('/:id', (req, res) => {
-    const {books} = stor;
-    const {id} = req.params;
-
-    const idx = books.findIndex(el => el.id === id)
-    if (idx !== -1) {
-        res.json(books[idx])
-    }else {
-        res.status(404);
-        res.json()
-    }
-})
+router.get('/create', (req, res) => {
+    res.render("book/create", {
+        title: "Book | create",
+        book: {},
+    });
+});
 
 
-// api/api/book/:id/download  
-router.get('/:id/download', (req, res) => {
-    const {id} = req.params
-     console.log(res.download(__dirname + '/../public/img/'+ id+'.pdf', id+'.pdf', (err) => {if (err) throw err}));
-})
-
-router.post('/', (req, res) => {
+router.post('/create', (req, res) => {
     const {books} = stor
     const {title, description, authors, favorite, fileCover, fileName, fileBook} = req.body
 
@@ -56,10 +47,44 @@ router.post('/', (req, res) => {
 
     books.push(newBook)
 
-    res.status(201).json(newBook)
+    res.redirect('/book')
+});
+
+
+
+router.get('/:id', (req, res) => {
+    const {books} = stor;
+    const {id} = req.params;
+
+    const idx = books.findIndex(el => el.id === id)
+    if (idx !== -1) {
+        res.render('book/view', {
+            title: 'Book | view',
+            book: books[idx]
+        })
+    }else {
+        res.status(404).redirect('/404')
+    }
 })
 
-router.put('/:id', (req, res) => {
+router.get('/update/:id', (req, res) => {
+    const {books} = stor
+    const {title, description, authors, favorite, fileCover, fileName, fileBook} = req.body
+    const {id} = req.params
+
+
+    const idx = books.findIndex(el => el.id === id)
+    if(idx !== -1) {
+        res.render("book/update", {
+            title: "Book | view",
+            book: books[idx],
+        });
+    }else {
+        res.status(404).redirect('/404')
+    }
+})
+
+router.post('/update/:id', (req, res) => {
     const {books} = stor
     const {title, description, authors, favorite, fileCover, fileName, fileBook} = req.body
     const {id} = req.params
@@ -78,46 +103,25 @@ router.put('/:id', (req, res) => {
             fileBook
         }
 
-        res.json(books[idx])
+        res.redirect(`/book/${idx}`)
     }else {
-        res.status(404).json('book | not found (((')
+        res.status(404).redirect('/404')
     }
 })
 
-router.delete('/:id', (req, res) => {
+router.post('/delete/:id', (req, res) => {
     const {books} = stor
     const {id} = req.params
-
     const idx = books.findIndex(el => el.id === id)
+
     if(idx !== -1) {
         books.splice(idx, 1)
-        res.json(true)
+        res.redirect('/book')
     }else {
-        res.status(404).json('book | not found (')
+        res.status(404).redirect('/404')
     }
 
 })
 
-// router.post('/user/login', (req, res)=> {
-//     const {users} = stor
-//     const {mail} = req.body
-
-//     const newUser = new User(mail)
-
-//     users.push(newUser)
-//     res.status(201).json(newUser)
-// })
-
-router.post('/upload-img', fileMiddleWare.single('my-book'), (req, res)=> {
-    if (req.file) {
-        const {path} = req.file
-        
-        console.log('path  ',path);
-        
-        res.json(path)
-    }else {
-        res.json(null)
-    }
-})
 
 module.exports = router
