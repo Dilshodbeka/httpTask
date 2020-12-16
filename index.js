@@ -2,7 +2,6 @@ const express = require('express')
 const cors = require('cors')
 const bodyParser  = require('body-parser')
 const ejs = require('ejs')
-const dotenv = require('dotenv').config()
 
 const loggerMiddleWare = require('./middleware/logger')
 const errorMiddleWare = require('./middleware/error')
@@ -26,6 +25,5 @@ app.use('/api/book', bookRouter)
 
 
 app.use(errorMiddleWare)
-
-const PORT = dotenv.parsed.PORT || 3000
+const PORT = process.env.PORT || 3000
 app.listen(PORT, console.log('starting', PORT))
