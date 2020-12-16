@@ -1,11 +1,13 @@
 {
-  "name": "node-ex-ejs",
-  "version": "1.0.0",
+  "name": "nod-ex-ejs",
+  "version": "1.0.1",
+  "description": "app",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon inde.js"
+    "dev": "nodemon inde.js",
+    "test": "node test.js"
   },
   "dependencies": {
     "axios": "^0.21.0",
@@ -21,5 +23,9 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Dilshodbeka/httpTask.git"
   }
 }
