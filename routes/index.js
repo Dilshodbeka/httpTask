@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios')
-const dotenv = require('dotenv').config()
 
-const numOneKey = dotenv.parsed.Master_API_Key; 
+const numOneKey = process.env.Master_API_Key; 
 router.get('/', async(req, res) => {
     try {
         const newsAPI = await axios.get(`https://api.weatherbit.io/v2.0/current?city=gliwice,Pl&key=${numOneKey}`)
