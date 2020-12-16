@@ -1,24 +1,36 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios')
+require('dotenv').config()
 
-const numOneKey = process.env.Master_API_Key; 
 router.get('/', async(req, res) => {
     try {
-        const newsAPI = await axios.get(`https://api.weatherbit.io/v2.0/current?city=gliwice,Pl&key=${numOneKey}`)
+        const newsAPI = await axios.get(`https://api.weatherbit.io/v2.0/current?city=gliwice,Pl&key=${process.env.Master_API_Key}`)
         res.render('index', {
         title: "Главная",
         lineOfNews : newsAPI.data.data
     });
-    } catch (error) {
-        if (error.response) {
-            throw error.response.data
-            throw error.response.status
-            throw error.response.headers
-        } else if (error.requiest){
-            throw error.requiest
+    } catch (err) {
+        if (err.response) {
+            res.render('index', {
+                title: "Главная",
+                lineOfNews : null 
+            })
+            console.log(err.response.data)
+            console.log(err.response.status)
+            console.log(err.response.headers)
+        } else if (err.requiest){
+            res.render('index', {
+                title: "Главная",
+                lineOfNews : null 
+            })
+            console.log(err.requiest)
         } else {
-            throw error.message
+            res.render('index', {
+                title: "Главная",
+                lineOfNews : null 
+            })
+            console.log(err.message)
         }
     }
 });
