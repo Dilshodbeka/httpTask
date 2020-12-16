@@ -11,8 +11,6 @@
                         <th>authors <i class="fa fa-sort"></i></th>
                         <th>favorite</th>
                         <th>fileCover <i class="fa fa-sort"></i></th>
-                        <th>fileName</th>
-                        <th>fileBook</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -22,8 +20,6 @@
                         <td><%= book.authors %></td>
                         <td><%= book.favorite %></td>
                         <td><%= book.fileCover %></td>
-                        <td><%= book.fileName %></td>
-                        <td><%= book.fileBook %></td>
                         <td>
                             <a href="/book/update/<%= book.id %>" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons btn btn-sm btn-primary ">&#xE254;</i></a>
                             <form action="/book/delete/<%= book.id %>" method="POST" class="d-inline">

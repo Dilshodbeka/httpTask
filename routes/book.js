@@ -78,7 +78,6 @@ router.get('/:id', (req, res) => {
 
 router.get('/update/:id', (req, res) => {
     const {books} = stor
-    const {title, description, authors, favorite, fileCover, fileName, fileBook} = req.body
     const {id} = req.params
 
 
@@ -97,9 +96,8 @@ router.post('/update/:id', (req, res) => {
     const {books} = stor
     const {title, description, authors, favorite, fileCover, fileName, fileBook} = req.body
     const {id} = req.params
-
-
     const idx = books.findIndex(el => el.id === id)
+    
     if(idx !== -1) {
         books[idx] = {
             ...books[idx],
@@ -111,8 +109,7 @@ router.post('/update/:id', (req, res) => {
             fileName,
             fileBook
         }
-
-        res.redirect(`/book/${idx}`)
+        res.redirect(`/book/${id}/`)
     }else {
         res.status(404).redirect('/404')
     }
