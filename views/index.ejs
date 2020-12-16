@@ -20,7 +20,19 @@
                    <li class="list-group-item">Visibility : <%- el.vis %></li>
                 <% }); %>
                 </ul> </div>
-            <div class="col-sm-8"><button class="btn btn-sm"><a href="/">update</a></button><img src="<%-lineOfGifs%>" alt="bitly_url"> </div>
+            <div class="col-sm-8">
+                <button class="btn btn-sm">
+                    <a href="/">update</a>
+                </button>
+                <div class="card" style="width: 18rem;">
+                    <img src="<%-imgOfGifs%>" class="card-img-top" alt="bitly_url">
+                    <div class="card-body">
+                      <p class="card-text">
+                        <%-textOfGifs%>
+                      </p>
+                    </div>
+                  </div>
+            </div>
         </div>
 
 

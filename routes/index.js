@@ -7,12 +7,14 @@ router.get('/', async(req, res) => {
     try {
         const newsAPI = await axios.get(`https://api.weatherbit.io/v2.0/current?city=gliwice,Pl&key=${process.env.Master_API_Key}`)
         const gifAPI = await axios.get(`https://api.giphy.com/v1/gifs/random?api_key=7lSbBLq2y08ahBmeJfRan5Fb2JUU3Jsy&tag=&rating=g`)
-        const lineOfGifs = gifAPI.data.data.image_url;
+        const imgOfGifs = gifAPI.data.data.image_url;
+        const textOfGifs = gifAPI.data.data.title;
         res.render('index', {
-        title: "Главная",
-        lineOfNews: newsAPI.data.data,
-        lineOfGifs: lineOfGifs
-    });
+            title: "Главная",
+            lineOfNews: newsAPI.data.data,
+            imgOfGifs: imgOfGifs,
+            textOfGifs: textOfGifs
+        });
     }catch (err) {
         if (err.response) {
             res.render('index', {
