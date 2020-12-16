@@ -7,6 +7,24 @@
         <br>
         <hr>
         <a class="btn btn-sm btn-success" href="book/create">Добавить запись</a>
+        <br>
+        <br>
+        <div class="row">
+            <div class="col-sm-4"><h3>Pogoda</h3>
+                <ul class="list-group">
+                <% lineOfNews.forEach((el, i) => { %>
+                    <li class="list-group-item active" aria-current="true">City: <%-el.city_name%></li>
+                    <li class="list-group-item">description : <%- el.weather.description %></li>
+                   <li class="list-group-item">Temp : <%- el.temp %></li>
+                   <li class="list-group-item">Wind speed : <%- el.wind_spd %></li>
+                   <li class="list-group-item">Visibility : <%- el.vis %></li>
+                <% }); %>
+                </ul> </div>
+            <div class="col-sm-8"><button class="btn btn-sm"><a href="/">update</a></button></div>
+        </div>
+
+          
+          
     </div>
 </div>
 

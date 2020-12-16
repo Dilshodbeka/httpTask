@@ -1,8 +1,10 @@
 const express = require('express')
 const router = express.Router();
 
+
 const {Book, User} = require('../models/index')
-const fileMiddleWare = require('../middleware/downloadFile')
+const fileMiddleWare = require('../middleware/downloadFile');
+const { default: Axios } = require('axios');
 
 const stor = {
     books: [],
@@ -25,6 +27,9 @@ numbr.map(el => {
 
 router.get('/', (req, res) => {
     const {books} = stor
+
+
+
     res.render('book/index', {
         title: 'Book',
         book: books
