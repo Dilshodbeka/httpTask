@@ -10,7 +10,7 @@ router.get('/', async(req, res) => {
         title: "Главная",
         lineOfNews : newsAPI.data.data
     });
-    } catch (err) {
+    }catch (err) {
         if (err.response) {
             res.render('index', {
                 title: "Главная",
