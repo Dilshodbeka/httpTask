@@ -11,6 +11,14 @@ const bookRouter = require('./routes/book')
 
 const app = express()
 
+const csp = require('express-csp-header');
+app.use(csp({
+    policies: {
+        'default-src': [csp.NONE],
+        'img-src': [csp.SELF],
+    }
+}));
+
 app.set('view engine', 'ejs')
 
 app.use(bodyParser.urlencoded({extended : true}))
