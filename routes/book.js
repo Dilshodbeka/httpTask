@@ -4,7 +4,6 @@ const router = express.Router();
 
 const {Book, User} = require('../models/index')
 const fileMiddleWare = require('../middleware/downloadFile');
-const { default: Axios } = require('axios');
 
 const stor = {
     books: [],

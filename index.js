@@ -19,12 +19,12 @@ app.use(cors())
 app.use(loggerMiddleWare)
 
 
-app.use('/files' , express.static(__dirname + 'public'))
+app.use('/files' , express.static(__dirname + 'public/pdf'))
 app.use('/', indexRouter)
 app.use('/book', bookRouter)
 app.use('/api/book', bookRouter)
 
 
 app.use(errorMiddleWare)
-const PORT = process.env.PORT || 3000
-app.listen(PORT, console.log('starting', PORT))
+const PORT = process.env.PORT || 3001
+app.listen(3001, console.log('starting', PORT))
