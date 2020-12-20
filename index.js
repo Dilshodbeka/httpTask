@@ -24,7 +24,7 @@ app.use('/files' , express.static(__dirname + 'public/pdf'))
 app.use('/', indexRouter)
 app.use('/book', bookRouter)
 app.use('/api/book', bookRouter)
-ape.use(favicon(__dirname + '/public/falcon.ico'));
+app.use(favicon(__dirname + '/public/falcon.ico'));
 
 
 app.use(errorMiddleWare)
