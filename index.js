@@ -2,6 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const bodyParser  = require('body-parser')
 const ejs = require('ejs')
+const favicon = require('serve-favicon');
 
 const loggerMiddleWare = require('./middleware/logger')
 const errorMiddleWare = require('./middleware/error')
@@ -16,6 +17,7 @@ app.set('view engine', 'ejs')
 
 app.use(bodyParser.urlencoded({extended : true}))
 app.use(cors())
+ape.use(favicon(__dirname + '/public/falcon.ico'))
 app.use(loggerMiddleWare)
 
 
