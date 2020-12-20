@@ -17,7 +17,7 @@ app.set('view engine', 'ejs')
 
 app.use(bodyParser.urlencoded({extended : true}))
 app.use(cors())
-ape.use(favicon(__dirname + '/public/falcon.ico'))
+ape.use(favicon(__dirname + '/public/falcon.ico.jpeg'))
 app.use(loggerMiddleWare)
 
 
