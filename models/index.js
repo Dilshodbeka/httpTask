@@ -1,6 +1,6 @@
-const {Book, User } = require('./Book')
+const {BookM, User } = require('./Book')
 
 module.exports= {
-    Book,
+    BookM,
     User
 }

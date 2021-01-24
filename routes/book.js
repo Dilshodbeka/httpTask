@@ -1,33 +1,24 @@
 const express = require('express')
 const router = express.Router();
 
-const {Book, User} = require('../models/index')
-const fileMiddleWare = require('../middleware/downloadFile')
 
-const stor = {
-    books: [],
-    users: []
-}
-let numbr = [1, 2, 3];
-numbr.map(el => {
-    const newTodo = new Book(
-                            `title ${el}`, 
-                            `description ${el}`, 
-                            `authors ${el}`,
-                            `favorite ${el}`,
-                            `fileCover ${el}`,
-                            `fileName ${el}`,
-                            `fileBook ${el}`
-                            );
-    stor.books.push(newTodo);
-});
+const {BookM} = require('../models/index')
+const fileMiddleWare = require('../middleware/downloadFile');
 
+const newBook = new BookM({
+    title: 'title.',
+    description: 'description.',
+    authors: 'authors.',
+    favorite: 'favorite.',
+    fileCover: false,
+    fileName: 'filename.',
+    fileBook: 'file book,'
+})
 
 router.get('/', (req, res) => {
-    const {books} = stor
     res.render('book/index', {
         title: 'Book',
-        book: books
+        book: newBook
     })
 })
 
@@ -40,15 +31,20 @@ router.get('/create', (req, res) => {
 
 
 router.post('/create', (req, res) => {
-    const {books} = stor
     const {title, description, authors, favorite, fileCover, fileName, fileBook} = req.body
-    const newBook = new Book(title, description, authors, favorite, fileCover, fileName, fileBook)
+    const newBook = new BookM(title, description, authors, favorite, fileCover, fileName, fileBook)
 
-    books.push(newBook)
+    try {
+        newBook.save()
+    } catch (e) {
+        console.log('save error'+e);
+    }
 
     res.redirect('/book')
 });
 
+
+// undone feature uploading books and adding database
 // router.post('/upload-img',  (req, res)=> {
 //     if (req.file) {
 //         const {path} = req.file
@@ -62,14 +58,12 @@ router.post('/create', (req, res) => {
 
 
 router.get('/:id', (req, res) => {
-    const {books} = stor;
     const {id} = req.params;
-
-    const idx = books.findIndex(el => el.id === id)
-    if (idx !== -1) {
+    const bookIdx = BookM.findById(id).select('-__v')
+    if (bookIdx !== -1) {
         res.render('book/view', {
             title: 'Book | view',
-            book: books[idx]
+            book: bookIdx
         })
     }else {
         res.status(404).redirect('/404')
