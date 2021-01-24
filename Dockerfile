@@ -1,7 +1,7 @@
 FROM node:latest
 
-RUN mkdir -p ./new/app
-WORKDIR ./new/app
+RUN mkdir -p ./myapp
+WORKDIR /myapp1
 
 COPY ./package*.json ./
 RUN npm install
