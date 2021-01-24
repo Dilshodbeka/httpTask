@@ -13,7 +13,7 @@ mongoose.connect('mongodb://localhost:27017/mydb',
         useCreateIndex:true, 
         useUnifiedTopology: true, 
         useFindAndModify : false 
-    });
+    }).catch(err => handleError(err))
 
 const loggerMiddleWare = require('./middleware/logger')
 const errorMiddleWare = require('./middleware/error')
