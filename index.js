@@ -30,7 +30,7 @@ const bookRouter = require('./routes/book')
 const app = express()
 
 // middleware
-app.set('view engine', 'ejs')
+app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended : true}))
 app.use(cors())
 app.use(loggerMiddleWare)
