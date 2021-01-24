@@ -2,18 +2,23 @@ const express = require('express')
 const cors = require('cors')
 const bodyParser  = require('body-parser')
 const ejs = require('ejs')
-
+require('dotenv').config()
 // DB
 const mongoose = require('mongoose');
 // middleware
 
-mongoose.connect('mongodb://localhost:27017/mydb', 
+const PASSWORD = process.env.MDB_PD;
+const LOGIN = process.env.MDB_LG;
+
+mongoose.connect(`mongodb+srv://mydb:${PASSWORD}@books.zae3q.mongodb.net/${LOGIN}?retryWrites=true&w=majority`, 
     {
         useNewUrlParser: true, 
         useCreateIndex:true, 
         useUnifiedTopology: true, 
         useFindAndModify : false 
-    }).catch(err => handleError(err))
+    })
+    .then(()=> console.log('M connected'))
+    .catch(err => console.log(err))
 
 const loggerMiddleWare = require('./middleware/logger')
 const errorMiddleWare = require('./middleware/error')
