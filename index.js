@@ -15,13 +15,6 @@ mongoose.connect('mongodb://localhost:27017/mydb',
         useFindAndModify : false 
     });
 
-const connection = mongoose.connection;
-connection.once('open', () => {
-    console.log('MongoDB connected');
-});
-connection.on('error', console.error.bind(console, 'MongoDB connection error:'));
-
-
 const loggerMiddleWare = require('./middleware/logger')
 const errorMiddleWare = require('./middleware/error')
 // routes
