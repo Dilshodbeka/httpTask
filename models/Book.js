@@ -13,9 +13,9 @@ const bookSchema = new Schema ({
     favorite: {
         type: String, default: ""
     },
-    fileCover: {
-        type: Boolean, default: false
-    },
+    //fileCover: {
+    //    type: Boolean, default: false
+    //},
     fileName: {
         type: String, default: ""
     },
@@ -30,4 +30,4 @@ const bookSchema = new Schema ({
 //     }
 // })
 
-module.exports = model('BookM', bookSchema)
+module.exports = model("Books", bookSchema);

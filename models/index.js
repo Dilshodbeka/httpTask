@@ -1,6 +1,3 @@
-const {BookM, User } = require('./Book')
+const Books = require('./Book')
 
-module.exports= {
-    BookM,
-    User
-}
+module.exports = {Books}
