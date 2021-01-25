@@ -1,2 +1,39 @@
+<script src="/socket.io/socket.io.js"></script>
+<script>
+        const chatForm = document.getElementById('chat-form')
+        const chatMessages = document.querySelector('.chat-messages')
+        const socket = io();
+        
+        //msg from server
+        socket.on('message', message=> {
+            outputMessage(message)
+
+            chatMessages.scrollTop = chatMessages.scrollHeight
+        })
+        // submit msg
+        chatForm.addEventListener('submit', (e)=> {
+            e.preventDefault()
+            const msg = e.target.elements.myMsg.value
+            socket.emit('chatMessage', msg)
+            e.target.elements.myMsg.value = ''
+            e.target.elements.myMsg.focus()
+            
+        });
+
+        socket.on('message', msg => {
+            console.log(msg);
+        })
+
+
+        function outputMessage(message){
+            const p = document.createElement('p')
+            p.classList.add('comment-content')
+            p.innerHTML = `
+            ${message.uName} <span>${message.time}</span> : ${message.text} 
+            `
+            document.querySelector('.chat-messages').appendChild(p)
+        }
+</script>
+
 </body>
 </html>
