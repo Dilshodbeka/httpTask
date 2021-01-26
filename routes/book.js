@@ -41,13 +41,11 @@ router.get('/create', (req, res) => {
 router.post('/create', (req, res) => {
     const {title, description, authors, favorite, fileName, fileBook} = req.body
     const newBook = new Books({title, description, authors, favorite, fileName, fileBook})
-
     try {
         newBook.save()
     } catch (e) {
         console.log('save error'+e);
     }
-
     res.redirect('/book')
 });
 
@@ -69,8 +67,6 @@ router.get('/:id', (req, res) => {
 
 router.get('/update/:id', (req, res) => {
     const {id} = req.params
-    console.log('update new version :', req.body);
-
     Books.findById(id, (err, data) => {
         if(err){
             console.log(err);
@@ -82,20 +78,9 @@ router.get('/update/:id', (req, res) => {
             })
         }
     })
-    // const {id} = req.params
-    // const idx = Books.findByIdAndUpdate(el => el.id === id)
-    // if(idx !== -1) {
-    //     res.render("book/update", {
-    //         title: "Book | view",
-    //         book: Books[idx],
-    //     });
-    // }else {
-    //     res.status(404).redirect('/404')
-    // }
 })
 
 router.post('/update/:id', (req, res) => {
-
     const {title, description, authors, favorite, fileName, fileBook} = req.body
     const {id} = req.params    
     Books.findByIdAndUpdate(id, {title, description, authors, favorite, fileName, fileBook}, (err)=>{

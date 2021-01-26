@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router();
 
-const {Book, User} = require('../../models/index')
+const {Books, User} = require('../../models/index')
 const fileMiddleWare = require('../../middleware/downloadFile')
 
 const stor = {
@@ -10,7 +10,7 @@ const stor = {
 }
 let numbr = [1, 2, 3];
 numbr.map(el => {
-    const newTodo = new Book(
+    const newTodo = new Books(
                             `title ${el}`, 
                             `description ${el}`, 
                             `authors ${el}`,

@@ -23,11 +23,6 @@ const bookSchema = new Schema ({
         type: String, default: ""
     }
 })
-// new file user and add model
-// const userSchema = ({
-//     email:{
-//         type: String, required: true
-//     }
-// })
+
 
 module.exports = model("Books", bookSchema);
