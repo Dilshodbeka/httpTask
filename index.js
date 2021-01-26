@@ -6,9 +6,13 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const io = require("socket.io")(http);
 const ejs = require("ejs");
+// passport
+const passport = require('passport')
+
+// need to modify
 const formatMsg = require("./views/partials/messages");
 
-
+// .env
 require("dotenv").config();
 // DB
 const mongoose = require("mongoose");
@@ -58,9 +62,12 @@ io.on("connection", (socket) => {
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
+app.use(express.json());
 app.use(loggerMiddleWare);
+app.use(passport.initialize())
+require('./middleware/passport')(passport)
 
-// routes
+// routess
 app.use("/files", express.static(__dirname + "public/pdfs"));
 app.use("/", indexRouter);
 app.use("/book", bookRouter);

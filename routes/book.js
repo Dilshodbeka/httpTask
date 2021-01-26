@@ -1,5 +1,7 @@
 const express = require('express')
 const router = express.Router();
+const passport = require('passport')
+
 
 const {Books} = require('../models/index.js')
 //const fileMiddleWare = require('../middleware/downloadFile');
@@ -36,8 +38,8 @@ router.get('/create', (req, res) => {
         book: {},
     });
 });
-
-
+// adding authenticate to the pages
+// passport.authenticate('jwt', {session: false}),
 router.post('/create', (req, res) => {
     const {title, description, authors, favorite, fileName, fileBook} = req.body
     const newBook = new Books({title, description, authors, favorite, fileName, fileBook})
