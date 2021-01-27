@@ -7,7 +7,7 @@ const bodyParser = require("body-parser");
 const io = require("socket.io")(http);
 const ejs = require("ejs");
 // passport
-const passport = require('passport')
+const passport = require("passport");
 
 // need to modify
 const formatMsg = require("./views/partials/messages");
@@ -21,14 +21,12 @@ const mongoose = require("mongoose");
 const uri = process.env.MONGODB_URI;
 
 mongoose
-  .connect(uri ,
-    {
-      useNewUrlParser: true,
-      useCreateIndex: true,
-      useUnifiedTopology: true,
-      useFindAndModify: false,
-    }
-  )
+  .connect(uri, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+  })
   .then(() => console.log("M connected"))
   .catch((err) => console.log(err));
 
@@ -40,23 +38,42 @@ const bookRouter = require("./routes/book");
 //const bookApiRouter = require("./routes/api/book");
 const authApiRouter = require("./routes/api/auth");
 
+
+
+
+
+
+
+
+
+
+
+
 // sockets
 io.on("connection", (socket) => {
-  socket.emit("message", formatMsg("admin", "welcome all"));
-  socket.broadcast.emit(
-    "message",
-    formatMsg("admin", "a user has joined the chat")
-  );
 
-  socket.on("disconnect", () => {
-    io.emit("message", formatMsg("admin", "a user has left the chat"));
-  });
-
-  // listen chat
-  socket.on("chatMessage", (msg) => {
-    io.emit("message", formatMsg("user", msg));
-  });
+  console.log(`new ${socket.id}`);
+  socket.on('comment', (data)=>{
+    data.time = Date()
+    socket.broadcast.emit('comment', data)
+  })
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // middleware
 app.set("view engine", "ejs");
@@ -64,8 +81,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use(express.json());
 app.use(loggerMiddleWare);
-app.use(passport.initialize())
-require('./middleware/passport')(passport)
+app.use(passport.initialize());
+require("./middleware/passport")(passport);
 
 // routess
 app.use("/files", express.static(__dirname + "public/pdfs"));

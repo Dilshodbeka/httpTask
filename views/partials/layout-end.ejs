@@ -1,38 +1,63 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script>
-        const chatForm = document.getElementById('chat-form')
-        const chatMessages = document.querySelector('.chat-messages')
+    
         const socket = io();
+
+
+        const inputName = document.getElementById('name')
+        const textArea = document.getElementById('comment')
+        const submitBtn = document.getElementById('submit') 
         
-        //msg from server
-        socket.on('message', message=> {
-            outputMessage(message)
+        const commentBox = document.querySelector('.my_card_here')
+        let enterdUserName = inputName.value;
 
-            chatMessages.scrollTop = chatMessages.scrollHeight
-        })
-        // submit msg
-        chatForm.addEventListener('submit', (e)=> {
+
+        submitBtn.addEventListener('click', (e)=> {
             e.preventDefault()
-            const msg = e.target.elements.myMsg.value
-            socket.emit('chatMessage', msg)
-            e.target.elements.myMsg.value = ''
-            e.target.elements.myMsg.focus()
-            
-        });
+            let comment = textArea.value
+            if(!comment){
+                return
+            }
 
-        socket.on('message', msg => {
-            console.log(msg);
+            postMessage(comment)
         })
 
 
-        function outputMessage(message){
-            const p = document.createElement('p')
-            p.classList.add('comment-content')
-            p.innerHTML = `
-            ${message.uName} <span>${message.time}</span> : ${message.text} 
-            `
-            document.querySelector('.chat-messages').appendChild(p)
-        }
+       function postMessage(comment) {
+           let data = {
+               username: enterdUserName,
+               comment: comment
+           }
+           apendToDOM(data)
+           textArea.value = ''
+
+           broadcastComment(data)
+
+       }
+
+       function apendToDOM(data) {
+           let divTag = document.createElement('div')
+           divTag.classList.add('card-body')
+
+           let markUp = `
+           <h5 class="card-title">
+            ${data.username}<h6><span class="badge bg-warning"><small>time: ${moment(data.time).format('LT')}</small></span></h6>
+            </h5>
+            ${data.comment}
+           `
+           divTag.innerHTML = markUp
+
+           commentBox.prepend(divTag)
+       }
+
+       function broadcastComment(data) {
+           socket.emit('comment', data)
+       }
+
+       socket.on('comment', (data)=>{
+           apendToDOM(data)
+       })
 </script>
 
 </body>

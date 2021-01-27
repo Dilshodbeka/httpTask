@@ -56,7 +56,7 @@ router.post("/login", async function (req, res) {
 });
 
 router.get("/me", (req, res)=> {
-  res.status(201).json({message: "welcome to your page"})
+  res.json(req.user)
   // res.redirect('/')
   // after here will work this one
 });
@@ -67,7 +67,7 @@ router.post("/signup", async (req, res) => {
   if (candidate) {
     //error
     res.status(409).json({
-      message: "Not valid sorry",
+      message: "Not valid sorry ",
     });
   } else {
     const salt = bcrypt.genSaltSync(10);
